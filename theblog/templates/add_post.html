@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+{% block title %}Create a Blog Post!{% endblock %}
+{% block content %}
+
+<!-- we have to keep lines 1-3 on the top or else we get error ... best way for me to comment out coding !! -->
+
+
+{% if user.is_authenticated %}
+
+	<h1>Add Blog Post</h1> 
+
+	<br/><br/>
+	<div class="form-group">                                         
+		<form method='POST' enctype="multipart/form-data">
+			{% csrf_token %}
+			{{ form.media }}
+			{{ form.as_p }}
+			<button class="btn btn-secondary">Post</button> 
+		</form>
+	</div>
+
+	<script>
+		var name = "{{ user.id }}";
+		document.getElementById("author_field").value = name;
+	</script>
+
+{% else %}
+
+You are not allowed to edit unless your logged in 
+
+{% endif %}
+
+
+
+
+
+<!-- <h1>Add Blog Post</h1> 
+
+<br><br>
+<form method='POST'>
+	{% csrf_token %}
+	{{ form.as_p }}
+	<button class="btn btn-secondary">Post</button>
+</form> -->
+
+
+
+<!-- this page will create a new post ... so we will use CreateView ... add this to views.py ... add this new template to urls.py as well -->
+<!-- ADDED header 1 .... ADDED form .... ADDED csrf token which protects the information being submitted on the form -->
+<!-- ADDED form.as_p this is a django form, the p stands for <p> so every field in our form has its own p /p  ... we can change the p to ul , li , h1 , etc .. can be changed to what w.e want -->
+<!-- ADDED button bootstrap style -->
+<!-- RELOAD our localhost:8000/new_post page to see this template so far .... our post button does not work at this point ... we will create a method in models.py called get_absolute_url-->
+<!-- ADDED the tab title  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <h1>Add Blog Post</h1> 
+
+<br><br>
+<table>
+<form method='POST'>
+	{% csrf_token %}
+	{{ form.as_table }}	
+</form>
+</table>
+<button class="btn btn-secondary">Post</button>
+
+ -->
+
+
+
+<!-- EDITED form.as_p to _table .. also ADDED a table element surronding the form ...-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <h1>Add Blog Post</h1> 
+
+<br/><br/>
+<div class="form-group">                                         
+	<form method='POST'>
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button class="btn btn-secondary">Post</button> 
+	</form>
+</div> -->
+
+
+
+<!-- ADDED class=formgroup which will convert this page to a bootstrap style div ... looks like a better form for our add post -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- {% if user.is_authenticated %}
+
+	<h1>Add Blog Post</h1> 
+
+	<br/><br/>
+	<div class="form-group">                                         
+		<form method='POST'>
+			{% csrf_token %}
+			{{ form.as_p }}
+			<button class="btn btn-secondary">Post</button> 
+		</form>
+	</div>
+
+	<script>
+		var name = "{{ user.id }}";
+		document.getElementById("author_field").value = name;
+	</script>
+
+{% else %}
+
+You are not allowed to edit unless your logged in 
+
+{% endif %}
+ -->
+
+<!-- ADDED the if / else statement ... so only valid logged in users can access the add post   -->
+<!-- ADDED <script> WITHIN this script there will be JavaScipt coding .. var name is CV called name .. bound to .. the user.username we created with django ... 
+	  document.getElementById("author_field") is used in Java to get the id 'author_field' which we created in forms.py in the 'author' line .. using value to find the value in our forms.py which is a '' blank string..
+	  this is all bound to the variable we created name which is the user.id ..   
+	  NOW there will be no author field box and the author will automatically be the username .. -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- {% if user.is_authenticated %}
+
+	<h1>Add Blog Post</h1> 
+
+	<br/><br/>
+	<div class="form-group">                                         
+		<form method='POST'>
+			{% csrf_token %}
+			{{ form.media }}
+			{{ form.as_p }}
+			<button class="btn btn-secondary">Post</button> 
+		</form>
+	</div>
+
+	<script>
+		var name = "{{ user.id }}";
+		document.getElementById("author_field").value = name;
+	</script>
+
+{% else %}
+
+You are not allowed to edit unless your logged in 
+
+{% endif %} -->
+
+
+
+
+<!-- ADDED .. {form.media} .. this will display our text editor -->
+<!-- ALSO .. ADD this to our update_post.html as well  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- EDITED our form method=POST line ... ADDED enctype bound to the following string ... this will display the CHOOSE FILE button when clicked will bring us to the users personal directory to find images
+that they want to upload !!   -->
+
+
+
+
+
+{% endblock %}

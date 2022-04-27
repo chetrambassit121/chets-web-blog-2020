@@ -1,0 +1,550 @@
+<!-- first add this template to the views.py -->
+
+
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Chets-Blog: {{ post.title_tag }}{% endblock %}
+
+{% block content %}
+
+	current user: {{ user.id }}
+	post author: {{ post.author.id }}
+
+	<h1>{{ post.title }}</h1>
+	<small>By: 
+		{{ post.author.first_name }} 
+		{{ post.author.last_name }} -
+		{{ post.post_date }} -
+		{% if user.is_authenticated %}
+			{% if user.id == post.author.id %}
+				<a href="{% url 'update_post' post.pk%}">(Edit)</a>
+				<a href="{% url 'delete_post' post.pk%}">(Delete)</a>
+			{% endif %}
+		{% endif %}
+	</small><br/> 
+	<hr>
+	<br/>
+
+	{% if post.header_image %}
+		<img src="{{ post.header_image.url }}">
+	{% endif %}
+
+	<br/><br/>
+	{{ post.body|safe }}
+	<br/><br/>
+	<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+	
+
+	<br/><br/>
+	<hr>
+	<br/>
+
+	{% if user.is_authenticated %}
+		<form action="{% url 'like_post' post.pk %}" method="POST">
+			{% csrf_token %}
+			<button type="submit", name="post_id", value="{{ post.id }}", class="btn btn-primary btn-sm">Like</button> - {{ total_likes }} Likes
+		</form>
+
+		<form action="{% url 'dislike_post' post.pk %}" method="POST">
+			{% csrf_token %}
+			<button type="submit", name="post_id", value="{{ post.id }}", class="btn btn-danger btn-sm">Dislike</button> - {{ total_dislikes }} Dislikes 
+		</form>
+	{% else %}
+		<small>
+			<a href="{% url 'login' %}">Login</a> to Like / Dislike
+		</small>
+		<br/><br/>
+		
+		<button class="btn btn-primary btn-sm" onclick="">Like</button> - {{ total_likes }} Likes
+		<button class="btn btn-danger btn-sm">Dislike</button> - {{ total_dislikes }} Dislikes
+		  
+	{% endif %}
+
+	<br/>
+	<br/>
+
+	<hr>
+	<h2>Comments</h2>
+	<br/>
+	{% if not post.comments.all %}
+		No comments yet ..
+		{% if user.is_authenticated %} 	
+			<a href="{% url 'add_comment' post.pk %}">Add Comment</a>
+		{% else %}
+			Please login to comment
+		{% endif %}
+
+	{% else %}
+
+	<a href="{% url 'add_comment' post.pk %}">Add Comment</a>
+	<br/><br/>
+
+
+		{% for comment in post.comments.all %}
+			<strong> 
+				{{ comment.name }} -
+				{{ comment.date_added }}
+			</strong>
+			<br/>
+			{{ comment.body }}
+			<br/><br/>
+		{% endfor %}
+	{% endif %}
+	<br/>
+	
+
+
+	<div class="card mb-3">
+	  <div class="row g-0">
+	    <div class="col-md-2">
+	{% if post.author.profile.profile_pic %}
+	     <img src="{{ post.author.profile.profile_pic.url }}" class="card-img">
+	{% else %}
+		<img src="{% static 'theblog/images/default_pic.jpg' %}" class="card-img">
+	{% endif %}
+	    </div>
+	    <div class="col-md-10">
+	      <div class="card-body">
+	        <h5 class="card-title">{{ post.author.first_name }} {{ post.author.last_name }} -</h5>
+	        <p class="small text-muted">
+
+	        	<a href="{% url 'show_profile_page' post.author.profile.pk %}">Profile</a>
+
+	        	{% if post.author.profile.website_url %}
+	        		| <a href="{{ post.author.profile.website_url }}">Website</a>  
+	        	{% endif %}
+
+	        	{% if post.author.profile.facebook_url %}
+	        		| <a href="{{ post.author.profile.facebook_url }}">Facebook</a> 
+	        	{% endif %}
+
+	        	{% if post.author.profile.twitter_url %} 
+	        		| <a href="{{ post.author.profile.twitter_url }}">Twitter</a> 
+	        	{% endif %}
+
+	        	{% if post.author.profile.instagram_url %} 
+	        		| <a href="{{ post.author.profile.instagram_url }}">Instagram</a> 
+	        	{% endif %}
+
+	        	{% if post.author.profile.pinterest_url %} 
+	        		| <a href="{{ post.author.profile.pinterest_url }}">Pinterest</a> 
+	        	{% endif %}
+
+	        </p>	
+	        <p class="card-text">{{ post.author.profile.bio }}</p>
+	        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<br>
+	<br>
+	<br>
+
+	
+
+
+
+
+<!-- ADDED .. img post.author.profile.profile_pic.url  ... we uploaded the pic from localhost8000:/admin ... now its being displayed on this html file !!  -->
+<!-- width and height code ... class rounded circle from bootstrap which will make the image round !!  -->
+
+<!-- REMOVED the coding described above  -->
+
+<!-- ADDED div class=mb-3 ... this div taken from bootsrap/components/horizontal ... its a bootstrap way of displaying a nice looking user profile with images bio etc ... we added / edited this div -->
+<!-- we added the users first , last name , profile pic , and bio 5 site urls !! -->
+<!-- the 5 urls in if endif statements .. so if user doesnt fill out of those fields then it wont be displayed  -->
+
+<!-- ADDED .. if else endif statement to our img src=" post.author.profile.profile_pic.url }}" class="card-img" code ... if user has an uploaded image then display it ... 
+	else.. display the default pic we saved  img src=" static 'theblog/images/default_pic.jpg' }}" class="card-img-->
+
+<!-- ADDED load static at the top of file !!!!! -->
+
+<!-- ADDED url 'show_profile_page' post.author.profile.id' this will be the link for our users profile -->
+
+<!-- ADDED comments with the if / endif statement ....   -->
+
+
+
+
+<!-- <h1>{{ post.title }}</h1>
+<small>By: {{post.author.first_name }} {{ post.author.last_name }}</small><br/>
+<hr>
+<br/>
+{{ post.body }}
+<br/><br/>
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a> -->
+
+
+
+
+<!-- this page will display the title, first and last name of author, body , horizontol line , body of the post , back link  -->
+<!-- the link will be localhost:8000/article/1 for the first post article/2 for the seond post etc .. this is because the posts are in an <ul> from the home.html page -->
+<!-- now lets create a base.html file  -->
+<!-- after creating the base.html we ADDED our extends , block content , endblock .. now this page linked to base.html -->
+<!-- ADDED  class="btn btn-secondary" to our back anchor which turns it into a bootstrap button -->
+<!-- ADDED blocktitle Chets-Blog endblock .. the title on the tab will be Chets-Blog when when this page is dsiplayed .. it will also display the actual post . title as well .. w.e we want to display -->
+<!-- EDITED our bloktitle endblok ... changed from post . title to post . title _ tag instead  so it will display the title _ tag ... up to me what i want displayed... -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <h1>{{ post.title }}</h1>
+<small>By: 
+	{{ post.author.first_name }} 
+	{{ post.author.last_name }} -
+	{{ post.post_date }} -
+	<a href="{% url 'update_post' post.pk%}">(Edit)</a>
+	<a href="{% url 'delete_post' post.pk%}">(Delete)</a>
+</small><br/> 
+<hr>
+<br/>
+{{ post.body }}
+<br/><br/>
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a> -->
+
+
+
+<!-- ADDED the <a>Edit<a> which will direct us to the update_post page -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <h1>{{ post.title }}</h1>
+<small>By: 
+	{{ post.author.first_name }} 
+	{{ post.author.last_name }} -
+	{{ post.post_date }} -
+	{% if user.is_authenticated %}
+		<a href="{% url 'update_post' post.pk%}">(Edit)</a>
+		<a href="{% url 'delete_post' post.pk%}">(Delete)</a>
+	{% endif %}
+</small><br/> 
+<hr>
+<br/>
+{{ post.body|safe }}
+<br/><br/>
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a> -->
+
+
+
+
+<!-- ADDED the if statement ... so only valid logged in users can access those links   -->
+<!-- ADDED |safe ... this will allow us to do html editing when we click edit on our post .. you can add things like <p> , <strong> , etc -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- current user: {{ user.id }}
+post author: {{ post.author.id }}
+
+<h1>{{ post.title }}</h1>
+<small>By: 
+	{{ post.author.first_name }} 
+	{{ post.author.last_name }} -
+	{{ post.post_date }} -
+	{% if user.is_authenticated %}
+		{% if user.id == post.author.id %}
+			<a href="{% url 'update_post' post.pk%}">(Edit)</a>
+			<a href="{% url 'delete_post' post.pk%}">(Delete)</a>
+		{% endif %}
+	{% endif %}
+</small><br/> 
+<hr>
+<br/>
+{{ post.body|safe }}
+<br/><br/>
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a> -->
+
+
+
+<!-- ADDED post author: post.author.id  .. this will display which author created the post .. the authors name is the username ..
+     if a post was created by the ADMIN (our first ever username) then 1 will be displayed .. bob (second username created) is 2 .. chetrambassit (third username created) is 3 and so on  -->
+
+<!-- ADDED current user : {{ user.id }} .. this will display the CURRENT user thats logged in .. same concept admin is 1 etc ... -->
+
+<!-- ADDED { if user.id == post.author.id %} and the endif .... so now if the user.id matches (==) the post.author.id then they can edit / delete the post -->
+
+<!-- the purpose of adding these three lines is for users to ONLY be able to edit / delete there own postd and not others !!!  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- current user: {{ user.id }}
+post author: {{ post.author.id }}
+
+<h1>{{ post.title }}</h1>
+<small>By: 
+	{{ post.author.first_name }} 
+	{{ post.author.last_name }} -
+	{{ post.post_date }} -
+	{% if user.is_authenticated %}
+		{% if user.id == post.author.id %}
+			<a href="{% url 'update_post' post.pk%}">(Edit)</a>
+			<a href="{% url 'delete_post' post.pk%}">(Delete)</a>
+		{% endif %}
+	{% endif %}
+</small><br/> 
+<hr>
+<br/>
+{{ post.body|safe }}
+<br/><br/>
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+
+<br><br>
+<hr>
+<br>
+<form action="{% url 'like_post' post.pk %}" method="POST">
+	{% csrf_token %}
+	<button type="submit", name="post_id", value="{{ post.id }}" class="btn btn-primary btn-sm">Like</button> - {{ total_likes }} Likes
+</form>
+ -->
+
+
+<!-- ADDED the br and hr -->
+<!-- ADDED the form for the 'like_post' template (that we will create) it will be a post method since user will be clicking (which is posting) a like button -->
+<!-- csrf token for protection of posts .. like button .. end form  -->
+<!-- the like button submit type w/ a name and value class for styling using bootstrap code .. primaary button .. btn-sm means small   -->
+<!-- NOW we add a path on urls.py / create template / update the views   -->
+<!-- AFTER creating all the back end coding for like button / saving the likes ... we ADDED  total likes }} to be displayed !!  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- current user: {{ user.id }}
+post author: {{ post.author.id }}
+
+<h1>{{ post.title }}</h1>
+<small>By: 
+	{{ post.author.first_name }} 
+	{{ post.author.last_name }} -
+	{{ post.post_date }} -
+	{% if user.is_authenticated %}
+		{% if user.id == post.author.id %}
+			<a href="{% url 'update_post' post.pk%}">(Edit)</a>
+			<a href="{% url 'delete_post' post.pk%}">(Delete)</a>
+		{% endif %}
+	{% endif %}
+</small><br/> 
+<hr>
+<br/>
+{{ post.body|safe }}
+<br/><br/>
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+
+
+<br/><br/>
+<hr>
+<br/>
+<form action="{% url 'like_post' post.pk %}" method="POST">
+	{% csrf_token %}
+{% if user.is_authenticated %}
+	{% if liked %}
+		<button type="submit", name="post_id", value="{{ post.id }}", class="btn btn-danger btn-sm">Unlike</button> 
+	{% else %}
+		<button type="submit", name="post_id", value="{{ post.id }}", class="btn btn-primary btn-sm">Like</button> 
+	{% endif %}
+{% else %}
+<small>Login to Like</small>
+
+{% endif %}
+- {{ total_likes }} Likes
+</form>
+ -->
+
+
+
+<!-- ADDED ... if user is auth line and the endif  ... if user clicks like then the dislike button appears and vise versa -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 	current user: {{ user.id }}
+	post author: {{ post.author.id }}
+
+	<h1>{{ post.title }}</h1>
+	<small>By: 
+		{{ post.author.first_name }} 
+		{{ post.author.last_name }} -
+		{{ post.post_date }} -
+		{% if user.is_authenticated %}
+			{% if user.id == post.author.id %}
+				<a href="{% url 'update_post' post.pk%}">(Edit)</a>
+				<a href="{% url 'delete_post' post.pk%}">(Delete)</a>
+			{% endif %}
+		{% endif %}
+	</small><br/> 
+	<hr>
+	<br/>
+
+	{% if post.header_image %}
+		<img src="{{ post.header_image.url }}">
+	{% endif %}
+
+	<br/><br/>
+	{{ post.body|safe }}
+	<br/><br/>
+	<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+	
+
+	<br/><br/>
+	<hr>
+	<br/>
+
+	{% if user.is_authenticated %}
+		<form action="{% url 'like_post' post.pk %}" method="POST">
+			{% csrf_token %}
+			<button type="submit", name="post_id", value="{{ post.id }}", class="btn btn-primary btn-sm">Like</button> - {{ total_likes }} Likes
+		</form>
+
+		<form action="{% url 'dislike_post' post.pk %}" method="POST">
+			{% csrf_token %}
+			<button type="submit", name="post_id", value="{{ post.id }}", class="btn btn-danger btn-sm">Dislike</button> - {{ total_dislikes }} Dislikes 
+	{% else %}
+		<small>
+		<a href="{% url 'login' %}">Login</a>to Like / Dislike
+		</small>
+		<br/><br/>
+		
+		<button class="btn btn-primary btn-sm">Like</button> - {{ total_likes }} Likes
+		<button class="btn btn-danger btn-sm">Dislike</button> - {{ total_dislikes }} Dislikes
+		  
+	{% endif %}
+	
+	</form> -->
+
+
+
+
+	<!-- CREATED our owen version of the like / dislike buttons .. each button will stay on the page with there total number next to them !!!  -->
+	<!-- ADDED ...  if .. img post.header_image.url .. endif ... this will display the image if an image has been posted !!   -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+

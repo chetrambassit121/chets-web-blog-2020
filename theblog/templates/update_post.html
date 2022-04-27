@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% block title %}Update Blog Post!{% endblock %}
+{% block content %}
+
+<!-- we have to keep lines 1-3 on the top or else we get error .. best way for me to comment out coding !! -->
+
+
+<!-- <h1>Update Blog Post</h1> 
+
+<br/><br/>
+<div class="form-group">                                         
+	<form method='POST'>
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button class="btn btn-secondary">Update</button> 
+	</form>
+</div> -->
+
+
+
+<!-- go to views.py and urls.py and add this new template  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- {% if user.is_authenticated %}
+
+<h1>Update Blog Post</h1> 
+
+<br/><br/>
+<div class="form-group">                                         
+	<form method='POST'>
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button class="btn btn-secondary">Update</button> 
+	</form>
+</div>
+
+{% else %}
+
+You are not allowed to edit unless your logged in 
+
+{% endif %} -->
+
+
+<!-- ADDED the if / else statement ... so only valid logged in users can access the update post   -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- {% if user.is_authenticated %}
+	{% if user.id == post.author.id %}
+
+		<h1>Update Blog Post</h1> 
+
+		<br/><br/>
+		<div class="form-group">                                         
+			<form method='POST'>
+				{% csrf_token %}
+				{{ form.as_p }}
+				<button class="btn btn-secondary">Update</button> 
+			</form>
+		</div>
+
+	{% else %}
+
+			You cannot edit other users posts !!
+
+	{% endif %}
+
+{% else %}
+
+You are not allowed to edit unless your logged in 
+
+{% endif %} -->
+
+
+
+
+<!-- ADDED { if user.id == post.author.id %} .. else .. and endif ..  
+	so now users can only update there own post .. they will get the else message if they try to update other users posts -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% if user.is_authenticated %}
+	{% if user.id == post.author.id %}
+
+		<h1>Update Blog Post</h1> 
+
+		<br/><br/>
+		<div class="form-group">                                         
+			<form method='POST'>
+				{% csrf_token %}
+				{{ form.media }}
+				{{ form.as_p }}
+				<button class="btn btn-secondary">Update</button> 
+			</form>
+		</div>
+
+	{% else %}
+
+			You cannot edit other users posts !!
+
+	{% endif %}
+
+{% else %}
+
+You are not allowed to edit unless your logged in 
+
+{% endif %}
+
+
+
+
+<!-- ADDED .. form.media to display the textediotr like in our add_post.html file  -->
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

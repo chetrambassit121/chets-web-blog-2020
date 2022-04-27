@@ -1,0 +1,11 @@
+!!! simpleblog is the main directory ... ablog is the projects name within directory ... theblog, members, virt (displayed as a folder icon) etc are apps within the project !!!
+
+!!! after creating a project with gitbash terminal (EX: theblog, members) .. make sure to add that apps path in the ablog/ablog/pycache/urls.py .... path('', include('theblog.urls')) !!!
+
+!!! after creating a app using the git bash terminal .. make sure to add that apps name in the ablog/ablog/pycache/settings.py under INSTALLED APPS !!!
+
+!!! everytime we make a change to the models.py file of a project we have to go to gitbash terminal .. type in python manage.py makemigrations .. then python manage.py migrate .. this is upload the changes to the localhost:8000/admin !!! 
+
+!!! each app we create we have to create a urls.py file and a templates folder !!!
+
+!!! after creating a templates you have to update the views.py and the urls.py .... this could be done in any order as long as all three are updated !!!

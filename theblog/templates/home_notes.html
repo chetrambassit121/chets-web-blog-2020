@@ -1,0 +1,148 @@
+<!-- we will now create the home.html template to display the posts -->
+
+
+
+
+
+
+
+
+
+
+<!-- <h1>Post</h1>  -->
+
+
+<!-- creating a for loop .. will display each post in the object_list -->
+<!-- {% for post in object_list %}				
+	{{post.title}}
+	{{post.author}} -->
+
+
+<!-- ending the for loop -->
+<!-- {% endfor %} -->
+
+
+
+
+
+
+
+
+
+
+<!-- <h1>Post</h1> 
+
+
+<ul> 
+{% for post in object_list %}				
+	<li>{{post.title}} - {{post.author}}<br>
+	{{post.body}}</li>	
+{% endfor %}
+</ul> -->
+
+
+
+<!-- for loop now inside an unordered list which contains a list item .. list item contains our template variables  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <h1>Post</h1> 
+
+
+<ul> 
+{% for post in object_list %}				
+	<li>{{post.title}} - {{post.author.first_name}}
+		{{post.author.last_name}} - {{post.author.email}}<br>
+	{{post.body}}</li>	
+{% endfor %}
+</ul> -->
+
+
+
+<!-- added first, last, and email variables to be displayed on our localhost:8000 ... will remove email not reccomemnded to have your email out there   -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <h1>Post</h1> 
+
+
+<ul> 
+{% for post in object_list %}				
+	<li>{{post.title}} - {{post.author.first_name}}
+		{{post.author.last_name}}<br>
+	{{post.body}}</li>	
+{% endfor %}
+</ul> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- now we will create the articles_details.html template which will contain our posts  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <h1>Post</h1> 
+
+
+<ul> 
+{% for post in object_list %}				
+	<li><a href="{% url 'article-detail' post.pk %}">{{post.title}}</a> - {{post.author.first_name}}			
+		{{post.author.last_name}}<br>
+	{{post.body}}</li>	
+{% endfor %}
+</ul>
+ -->
+<!-- ADDED <a> this anchor will return the article-detail page we created along with the post primary key which is the the posts unique ID -->
+<!-- this is how you do hrefs in sublime text / django -->
+
+
+
+
+
+
+
+
+<!-- we will continue the home template on the home.html page now !!!!!!!!!!  -->

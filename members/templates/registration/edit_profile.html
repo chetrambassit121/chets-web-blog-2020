@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Edit Settings{% endblock %}
+{% block content %}
+
+
+<h1>Edit Settings</h1> 
+
+
+{{ user.profile.bio }}
+
+<br/><br/>
+<div class="form-group">                                         
+	<form method='POST'>
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button class="btn btn-secondary">Update Profile</button> 
+	</form>
+</div>
+
+
+
+
+
+<!-- CREATED our edit profile html page so user can edit there profile -->
+<!-- ADDED this html file to our views.py / urls.py files in the members app -->
+<!-- ADDED the user profile bio to display users bio  -->
+
+
+
+{% endblock %}
