@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'django_numpy',
     'theblog',                                                         # ADDED ... after creating theblog app in git bash terminal add it to this file !!!!
     'members',                                                         # ADDED ... after creating the members app in git bash terminal add it to this file !!!!  
     'ckeditor',                                                        # ADDED ... after pip install django-ckeditor in gitbash we add it here !!!!  
