@@ -383,27 +383,28 @@
 
 
 from django import forms 						
-from .models import Post, Category, Comment
+from .models import Post,  Comment
+# Category,
+
+# choices = Category.objects.all().values_list('name', 'name')                                    
 
 
-choices = Category.objects.all().values_list('name', 'name')                                    
+# choice_list = []																				 
 
-
-choice_list = []																				 
-
-for item in choices:                                                                             																								 
-	choice_list.append(item)                                									 
+# for item in choices:                                                                             																								 
+	# choice_list.append(item)                                									 
  
 
 class PostForm(forms.ModelForm):					
 	class Meta:								    
 		model = Post
-		fields = ('title', 'title_tag', 'author', 'category', 'body', 'snippet', 'header_image')                                      # ADDED ... header image                                                            
+		fields = ('title', 'title_tag', 'author',  'body', 'snippet', 'header_image')                                      # ADDED ... header image   
+		                                                         # 'category',
 		widgets = {                                                      											
 			'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'This is Title Placeholder'}),	
 			'title_tag': forms.TextInput(attrs={'class': 'form-control'}),  											
 			'author': forms.TextInput(attrs={'class': 'form-control', 'value':'', 'id':'author_field', 'type':'hidden'}),                        																								    
-			'category': forms.Select(choices=choices, attrs={'class': 'form-control'}),          
+			# 'category': forms.Select(choices=choices, attrs={'class': 'form-control'}),          
 			'body': forms.Textarea(attrs={'class': 'form-control'}),
 			'snippet': forms.Textarea(attrs={'class': 'form-control'}),      												  	  											        											
 		}

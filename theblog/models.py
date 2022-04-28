@@ -765,13 +765,13 @@ class Post(models.Model):
 		return reverse('home')         
 
 
-class Category(models.Model):                                                   
-	name = models.CharField(max_length=255)                                     
-	def __str__(self):                                                          
-		return self.name                                                        
+# class Category(models.Model):                                                   
+# 	name = models.CharField(max_length=255)                                     
+# 	def __str__(self):                                                          
+# 		return self.name                                                        
 
-	def get_absolute_url(self):								                    
-		return reverse('home')  
+# 	def get_absolute_url(self):								                    
+# 		return reverse('home')  
 
 
 class Profile(models.Model):							                        

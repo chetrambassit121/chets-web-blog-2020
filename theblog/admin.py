@@ -35,10 +35,10 @@
 
 
 from django.contrib import admin
-from .models import Post, Category, Profile, Comment     # ADDED profile and comment 
-
+from .models import Post, Profile, Comment     # ADDED profile and comment 
+# Category
 
 admin.site.register(Post)
-admin.site.register(Category)
+# admin.site.register(Category)
 admin.site.register(Profile)               # ADDED ... the Profile class from theblog/models.py
 admin.site.register(Comment)               # ADDED ... 

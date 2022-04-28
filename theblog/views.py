@@ -938,7 +938,7 @@
 
 from django.shortcuts import render, get_object_or_404                                         
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView               									 
-from .models import Post, Category, Comment                                                                      # ADDED comment !                 
+from .models import Post,  Comment                                                                      # ADDED comment ! Category,                
 from .forms import PostForm, EditForm, CommentForm                                                               # ADDED comment form              
 from django.urls import reverse_lazy, reverse                                           
 from django.http import HttpResponseRedirect                                                         										 		
@@ -950,9 +950,9 @@ class HomeView(ListView):
 	ordering = ['-post_date']  
 
 	def get_context_data(self, *args, **kwargs):                              
-		cat_menu = Category.objects.all()                					  
+		# cat_menu = Category.objects.all()                					  
 		context = super(HomeView, self).get_context_data(*args, **kwargs)	   
-		context['cat_menu'] = cat_menu								          
+		# context['cat_menu'] = cat_menu								          
 		return context
 
 	
@@ -961,7 +961,7 @@ class ArticleDetailView(DetailView):
 	template_name = 'article_details.html'
 
 	def get_context_data(self, *args, **kwargs):                               
-		cat_menu = Category.objects.all()                					   
+		# cat_menu = Category.objects.all()                					   
 		context = super(ArticleDetailView, self).get_context_data(*args, **kwargs)	 
 
 		stuff = get_object_or_404(Post, id=self.kwargs['pk'])                         
@@ -978,7 +978,7 @@ class ArticleDetailView(DetailView):
 
 		context['liked'] = liked       
 
-		context['cat_menu'] = cat_menu												 
+		# context['cat_menu'] = cat_menu												 
 		context['total_likes'] = total_likes  
 		context['total_dislikes'] = total_dislikes                                          # ADDED
 		return context               
@@ -1020,19 +1020,19 @@ class DeletePostView(DeleteView):
 	template_name = 'delete_post.html'
 	success_url = reverse_lazy('home')              
 
-class AddCategoryView(CreateView):						 				
-	model = Category 
-	fields = '__all__'                                           
-	template_name = 'add_category.html'
+# class AddCategoryView(CreateView):						 				
+# 	model = Category 
+# 	fields = '__all__'                                           
+# 	template_name = 'add_category.html'
 
-def CategoryView(request, cats):									
-	category_posts = Post.objects.filter(category=cats.replace('-', ' '))                
-	return render(request, 'categories.html', {'cats': cats.title().replace('-', ' '), 'category_posts': category_posts})   
+# def CategoryView(request, cats):									
+# 	category_posts = Post.objects.filter(category=cats.replace('-', ' '))                
+# 	return render(request, 'categories.html', {'cats': cats.title().replace('-', ' '), 'category_posts': category_posts})   
 
-def CategoryListView(request):                                																						
-	cat_menu_list = Category.objects.all()                     
-	return render(request, 'category_list.html',             
-	{'cat_menu_list': cat_menu_list}) 
+# def CategoryListView(request):                                																						
+# 	cat_menu_list = Category.objects.all()                     
+# 	return render(request, 'category_list.html',             
+# 	{'cat_menu_list': cat_menu_list}) 
 
 def LikeView(request, pk):						                                      
 	post = get_object_or_404(Post, id=request.POST.get('post_id'))          

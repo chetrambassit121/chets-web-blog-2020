@@ -33,24 +33,24 @@
             <!-- Dropdown menu for our categoires .. took this from bootstrap navbars and did our own editing on it! 
                  we do not want this dropdown menu inside our if user.is_authenticated or else statements .. so now users / non users can view the dropedown menu
                  we have to go to views.py and add coding to our homeview class for make this dropmenu better for displaying our categories -->
-            {% if cat_menu %}
+            <!-- { if cat_menu %}
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Categories
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  {% for item in cat_menu %}
-                    <li><a class="dropdown-item" href="{% url 'category' item|slugify %}">{{item}}</a></li>
-                  {% endfor %}
+                  { for item in cat_menu %}
+                    <li><a class="dropdown-item" href="{ url 'category' item|slugify %}">{{item}}</a></li>
+                  { endfor %}
                   <li><a class="dropdown-item" href="#">Action</a></li>
                   <li><a class="dropdown-item" href="#">Another action</a></li>
                 </ul>
               </li>
-            {% else %}
+            {else %}
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'category-list' %}">Categories</a>
+                <a class="nav-link" href="{ url 'category-list' %}">Categories</a>
               </li>
-            {% endif %}
+            { endif %} -->
             
 
             <!-- if a valid user is logged in then they have access to the following links in the if statement  -->
@@ -58,9 +58,9 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'add_post' %}">Add Post</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'add_category' %}">Add Category</a>
-              </li>
+             <!--  <li class="nav-item">
+                <a class="nav-link" href="{ url 'add_category' %}">Add Category</a>
+              </li> -->
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'logout' %}">Logout</a>
               </li> 
