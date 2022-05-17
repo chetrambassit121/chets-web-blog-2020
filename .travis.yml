@@ -10,6 +10,6 @@ install:
     - pipenv install
 
 script:
-    -  coverage run --source='authentication' manage.py test && coverage report && coverage html
+    -  python manage.py test 
 after_success:
     - codecov
